@@ -1,44 +1,38 @@
-🧩 Tech Challenge Fase 4 — Mobile (Posts, Comentários e Autenticação)
+# 🧩 Tech Challenge Fase 4 — Mobile (Posts, Comentários e Autenticação)
 
-O projeto tech-challenge-fase4-mobile é uma aplicação full-stack com foco em Mobile, composta por dois módulos principais:
+O projeto **tech-challenge-fase4-mobile** é uma aplicação **full-stack com foco em Mobile**, composta por dois módulos principais:
 
-Backend (api/) — API REST responsável por autenticação, regras de negócio, persistência e permissões.
+- **Backend (`api/`)** — API REST responsável por autenticação, regras de negócio, persistência e permissões.
+- **Aplicativo Mobile (`mobile/`)** — App desenvolvido em **React Native + Expo**, consumindo a API via HTTP.
 
-Aplicativo Mobile (mobile/) — App desenvolvido em React Native + Expo, consumindo a API via HTTP.
+O sistema implementa um **ambiente educacional de postagens e comentários**, com controle de acesso por **níveis de usuário** e autenticação via **JWT**.
 
-O sistema implementa um ambiente educacional de postagens e comentários, com controle de acesso por níveis de usuário e autenticação via JWT.
+---
 
-⚙️ Tecnologias Utilizadas
-Backend
+## ⚙️ Tecnologias Utilizadas
 
-Node.js + Express — API REST
+### 🔙 Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT (autenticação e autorização)
+- Bcrypt (criptografia de senhas)
+- Swagger (OpenAPI 3)
+- Docker & Docker Compose
 
-MongoDB + Mongoose — persistência de dados
+### 📱 Mobile
+- React Native
+- Expo
+- React Navigation
+- AsyncStorage
+- Expo Linear Gradient
 
-JWT — autenticação e autorização
+---
 
-Bcrypt — criptografia de senhas
+## 🧱 Arquitetura do Sistema
 
-Swagger (OpenAPI 3) — documentação da API
+O backend segue o padrão **MVC (Model–View–Controller)**, enquanto o mobile utiliza arquitetura **componentizada por telas**.
 
-Docker & Docker Compose — ambiente isolado e reprodutível
-
-Mobile
-
-React Native
-
-Expo
-
-React Navigation
-
-AsyncStorage — persistência de sessão
-
-Expo Linear Gradient — UI e efeitos visuais
-
-🧱 Arquitetura do Sistema
-
-O backend segue o padrão MVC (Model–View–Controller), enquanto o mobile utiliza arquitetura componentizada por telas.
-
+```bash
 tech-challenge-fase4/
 ├── api/                     # Backend (Node.js + Express + MongoDB)
 │   ├── src/
@@ -63,147 +57,134 @@ tech-challenge-fase4/
     ├── assets/
     ├── app.json
     └── App.js
+```
 
-🧠 Fluxo Principal do Sistema
+---
 
-Usuário realiza login no app mobile.
+## 🧠 Fluxo Principal
 
-API retorna um token JWT.
+1. Usuário realiza login pelo aplicativo mobile.
+2. O backend autentica o usuário e retorna um token JWT.
+3. O token e os dados do usuário são armazenados no AsyncStorage.
+4. O app consome rotas protegidas da API.
+5. As permissões determinam as funcionalidades disponíveis no sistema.
 
-Token e dados do usuário são armazenados no AsyncStorage.
+---
 
-O app consome rotas protegidas da API.
+## 🌐 Endpoints da API
 
-As permissões (aluno, professor, admin) controlam as funcionalidades visíveis.
+| Grupo | Método | Endpoint | Descrição |
+|--------|---------|-----------|------------|
+| **Autenticação** | POST | `/auth/registrar` | Registra novo usuário |
+| **Autenticação** | POST | `/auth/login` | Login e geração de token JWT |
+| **Posts** | GET | `/posts/busca` | Lista posts com filtro |
+| **Posts** | GET | `/posts` | Lista posts ativos |
+| **Posts** | GET | `/posts/professor` | Lista todos os posts (modo professor) |
+| **Posts** | GET | `/posts/{id}` | Busca post por ID |
+| **Posts** | POST | `/posts` | Cria novo post |
+| **Posts** | PUT | `/posts/{id}` | Atualiza post existente |
+| **Posts** | DELETE | `/posts/{id}` | Exclui post |
+| **Comentários** | GET | `/posts/{id}/comentarios` | Lista comentários de um post |
+| **Comentários** | POST | `/posts/{id}/comentarios` | Adiciona comentário |
+| **Comentários** | PUT | `/posts/{postId}/comentarios/{comentarioId}` | Edita comentário existente |
+| **Comentários** | DELETE | `/posts/{postId}/comentarios/{comentarioId}` | Exclui comentário |
 
-👤 Perfis de Usuário e Permissões
-🎓 Aluno
+---
 
-Visualiza posts ativos
+## 👤 Perfis de Usuário e Permissões
 
-Comenta em posts
+### 🎓 Aluno
+- Visualiza posts ativos
+- Comenta em posts
+- Edita e exclui apenas seus próprios comentários
 
-Edita/exclui apenas seus próprios comentários
+### 👨‍🏫 Professor
+- Todas as permissões de aluno
+- Cria posts
+- Edita posts
+- Ativa/Inativa posts
+- Visualiza posts inativos
+- Exclui comentários
 
-👨‍🏫 Professor
+### 👑 Admin
+- Todas as permissões de professor
+- Gerencia usuários
+- Altera cargos (aluno / professor / admin)
+- Acesso ao painel administrativo completo
 
-Todas as permissões de aluno
+---
 
-Cria posts
+## 👑 Usuário Admin Padrão
 
-Edita posts
+O sistema garante a existência de um usuário administrador padrão, independente do ambiente onde o projeto for executado:
+  ```txt
+    Email: admin@admin.com
+    Senha: admin
+    Cargo: admin
+  ```
 
-Ativa/Inativa posts
+---
 
-Visualiza posts inativos
+## 🐳 Como Executar o Backend
 
-Exclui comentários
-
-👑 Admin
-
-Todas as permissões de professor
-
-Gerencia usuários
-
-Altera cargos (aluno / professor / admin)
-
-Painel administrativo completo
-
-👑 Usuário Admin Padrão
-
-O sistema garante a existência de um usuário administrador padrão, válido em qualquer ambiente:
-
-Email: admin@admin.com
-Senha: admin
-Cargo: admin
-
-
-Esse usuário pode acessar todas as funcionalidades administrativas do app.
-
-🌐 Endpoints da API (Resumo)
-Grupo	Método	Endpoint	Descrição
-Auth	POST	/auth/registrar	Registrar usuário
-Auth	POST	/auth/login	Login e JWT
-Usuários	GET	/usuarios	Listar usuários
-Usuários	PATCH	/usuarios/{id}/cargo	Alterar cargo
-Posts	GET	/posts	Listar posts ativos
-Posts	GET	/posts/professor	Listar todos os posts
-Posts	GET	/posts/{id}	Buscar post
-Posts	POST	/posts	Criar post
-Posts	PUT	/posts/{id}	Editar post
-Posts	DELETE	/posts/{id}	Excluir post
-Comentários	POST	/posts/{id}/comentarios	Criar comentário
-Comentários	PUT	/posts/{postId}/comentarios/{comentarioId}	Editar comentário
-Comentários	DELETE	/posts/{postId}/comentarios/{comentarioId}	Excluir comentário
-
-📄 Documentação Swagger disponível em:
-
-http://localhost:3000/api-docs
-
-🐳 Como Executar o Backend (Docker)
 Pré-requisitos
 
-Docker
-
-Docker Compose
+- Docker
+- Docker Compose
 
 Subir API + MongoDB
-cd api
-docker compose up --build
+  ```bash
+    cd api
+    docker compose up --build
+  ```
+- API: http://localhost:3000
+- Swagger: http://localhost:3000/api-docs
 
+---
 
-API: http://localhost:3000
+## 📱 Como Executar o App Mobile
 
-Swagger: http://localhost:3000/api-docs
-
-📱 Como Executar o App Mobile
 Pré-requisitos
 
-Node.js
-
-Expo CLI
-
-Android Studio (emulador) ou dispositivo físico
+- Node.js
+- Expo CLI
+- Android Studio (emulador) ou dispositivo físico
 
 Instalação
-cd mobile
-npm install
-
+  ```bash
+    cd mobile
+    npm install
+  ```
 Executar
-npx expo start
+  ```powershell
+    npx expo start
+  ```
+- Pressione a para abrir no emulador Android
+- Ou utilize o Expo Go no celular
 
+---
 
-Pressione a para abrir no emulador Android
+## 🎨 Interface e Tema
 
-Ou use Expo Go no celular
+- Interface moderna inspirada em aplicações web
+- Gradiente de fundo em tons de cinza
+- Rosa para ações principais
+- Verde para ações positivas
+- Vermelho para ações destrutivas
 
-⚠️ Importante (Android Emulator):
-O app acessa a API via:
+As cores estão centralizadas em:
+`mobile/src/theme/colors.js`
 
-http://10.0.2.2:3000
+---
 
-🎨 Interface e Tema
+## 🔐 Segurança
 
-UI padronizada com tema centralizado
+- Senhas criptografadas com bcrypt
+- Autenticação via JWT
+- Controle de permissões no backend e no app
+- Rotas protegidas por middleware
 
-Gradiente de fundo em cinza
+---
 
-Rosa para ações principais
-
-Verde para ações positivas
-
-Vermelho para ações destrutivas
-
-Cores centralizadas em:
-
-mobile/src/theme/colors.js
-
-🔐 Segurança
-
-Senhas criptografadas com bcrypt
-
-JWT com expiração
-
-Rotas protegidas no backend
-
-Controle de permissões no backend e no app
+🚀 **Tech Challenge — Fase 4 (Full Stack Development)**  
+🗓️ **2025**
