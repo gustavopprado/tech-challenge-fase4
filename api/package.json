@@ -1,0 +1,44 @@
+{
+  "name": "tech-challenge-fase4",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phcassemiro/tech-challenge-fase4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phcassemiro/tech-challenge-fase4/issues"
+  },
+  "homepage": "https://github.com/phcassemiro/tech-challenge-fase4#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.27.0",
+    "express": "^5.1.0",
+    "jsdoc": "^4.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.1",
+    "nodemon": "^3.1.10",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.28.0",
+    "@types/node": "^22.15.24",
+    "babel-jest": "^30.0.5",
+    "jest": "^30.0.0",
+    "supertest": "^7.1.1"
+  }
+}

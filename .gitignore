@@ -1,0 +1,30 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Env
+.env
+
+# Expo
+.expo/
+.expo-shared/
+web-build/
+
+# React Native
+android/.gradle/
+android/build/
+android/app/build/
+
+# Logs
+*.log
+
+# Docker
+mongo_data/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store

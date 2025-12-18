@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:5.0
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  app:
+    build: .
+    container_name: node_app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - MONGO_URI={$DB_CONNECTION_STRING}
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+
+volumes:
+  mongo_data:
